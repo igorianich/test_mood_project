@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_135004) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_06_110209) do
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "music_record_id", null: false
+    t.integer "quantity", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["music_record_id"], name: "index_cart_items_on_music_record_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
   create_table "music_records", force: :cascade do |t|
     t.string "title"
     t.string "photo"
@@ -19,6 +36,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_135004) do
     t.string "damage_assessment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity", default: 0
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "music_record_id", null: false
+    t.integer "quantity", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["music_record_id"], name: "index_order_items_on_music_record_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -56,4 +92,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_135004) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "music_records"
+  add_foreign_key "carts", "users"
+  add_foreign_key "order_items", "music_records"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "orders", "users"
 end

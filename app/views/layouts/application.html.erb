@@ -14,6 +14,13 @@
   <% if user_signed_in? %>
     Logged in as <strong><%= current_user.email %></strong>.
     <%= link_to 'Edit profile', edit_user_registration_path %> |
+    <% if user_signed_in? && current_user.has_role?(:admin) %>
+      <%= link_to 'Create New Music Record', new_music_record_path, class: 'your-button-class' %> |
+    <% end %>
+    <% if current_user && current_user.has_role?(:user) %>
+      <%= link_to 'Cart', cart_path(current_user.cart), class: 'nav-link' %>
+    <% end %>
+
 <!--    change logout to button because link works with GET request-->
     <%#= link_to "Logout", destroy_user_session_path, method: :delete, status: :see_other %>
     <%= button_to "Logout", destroy_user_session_path, method: :delete, class: 'your-button-class' %>

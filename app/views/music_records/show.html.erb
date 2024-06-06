@@ -2,7 +2,7 @@
 
 <p>
   <strong>Photo:</strong>
-  <%= @music_record.photo %>
+  <%= image_tag(@music_record.photo) if @music_record.photo.present? %>
 </p>
 
 <p>
@@ -24,7 +24,13 @@
   <%= link_to 'Edit', edit_music_record_path(@music_record) %> |
   <%= link_to 'Destroy', @music_record, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% else %>
-  <%= link_to 'Book', book_music_record_path(@music_record) %>
+  <% if current_user.has_role?(:user) %>
+    <%= form_with url: add_to_cart_cart_items_path, method: :post do |form| %>
+      <%= form.hidden_field :music_record_id, value: @music_record.id, name: 'cart_item[music_record_id]' %>
+      <%= form.number_field :quantity, value: 1, min: 1, name: 'cart_item[quantity]' %>
+      <%= form.submit 'Add to Cart' %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= link_to 'Back', music_records_path %>
