@@ -1,0 +1,19 @@
+<h1>Music Records</h1>
+
+<%= paginate @music_records %>
+
+<% @music_records.each do |music_record| %>
+  <div>
+    <h2><%= link_to music_record.title, music_record %></h2>
+    <p><strong>Photo:</strong> <%= image_tag(music_record.photo) if music_record.photo.present? %></p>
+    <p><strong>Price:</strong> <%= number_to_currency(music_record.price) %></p>
+    <p><strong>Description:</strong> <%= music_record.description %></p>
+    <p><strong>Damage Assessment:</strong> <%= music_record.damage_assessment %></p>
+  </div>
+<% end %>
+
+<%= paginate @music_records %>
+
+<% if current_user.has_role?(:admin) %>
+  <%= link_to 'New Music Record', new_music_record_path %>
+<% end %>

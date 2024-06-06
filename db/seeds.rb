@@ -21,3 +21,13 @@ user2.add_role :user
 manager1.add_role :manager
 manager2.add_role :manager
 admin.add_role :admin
+
+20.times do
+  MusicRecord.create(
+    title: Faker::Music.album, # Use Faker gem to generate fake album title
+    photo: Faker::LoremFlickr.image, # Use Faker gem to generate fake image url
+    price: Faker::Commerce.price(range: 10.0..100.0), # Use Faker gem to generate fake price
+    description: Faker::Lorem.paragraph, # Use Faker gem to generate fake description
+    damage_assessment: Faker::Lorem.sentence # Use Faker gem to generate fake damage assessment
+  )
+end

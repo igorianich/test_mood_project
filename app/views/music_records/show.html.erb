@@ -1,0 +1,30 @@
+<h1><%= @music_record.title %></h1>
+
+<p>
+  <strong>Photo:</strong>
+  <%= @music_record.photo %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @music_record.price %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @music_record.description %>
+</p>
+
+<p>
+  <strong>Damage Assessment:</strong>
+  <%= @music_record.damage_assessment %>
+</p>
+
+<% if current_user.has_role?(:admin) %>
+  <%= link_to 'Edit', edit_music_record_path(@music_record) %> |
+  <%= link_to 'Destroy', @music_record, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% else %>
+  <%= link_to 'Book', book_music_record_path(@music_record) %>
+<% end %>
+
+<%= link_to 'Back', music_records_path %>

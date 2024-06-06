@@ -1,0 +1,44 @@
+<h1>MusicRecords#edit</h1>
+
+<%= form_with(model: @music_record, local: true) do |form| %>
+  <% if @music_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@music_record.errors.count, "error") %> prohibited this music_record from being saved:</h2>
+
+      <ul>
+        <% @music_record.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :photo %>
+    <%= form.text_field :photo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :damage_assessment %>
+    <%= form.text_field :damage_assessment %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
